@@ -33,8 +33,8 @@
                 <td><input type="text" name="lastName" /></td>
             </tr>
             <tr>
-                <td>Email:</td>
-                <td><input type="text" name="email" /></td>
+                <td>Password:</td>
+                <td><input type="text" name="password" /></td>
             </tr>
             <tr>
                 <td colspan="2"><input type="submit" value="Save" /></td>
@@ -47,14 +47,17 @@
             <th>ID</th>
             <th>Name</th>
             <th>LastName</th>
-            <th>Email</th>
+            <th>Password</th>
+            <th>UserName</th>
+
         </tr>
         <th:block th:each="user : ${users}">
             <tr>
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.firstName}"></td>
                 <td th:text="${user.lastName}"></td>
-                <td th:text="${user.email}"></td>
+                <td th:text="${user.password}"></td>
+                <td th:text="${user.userName}"></td>
             </tr>
         </th:block>
     </table>

@@ -12,7 +12,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(targetEntity=Role.class, fetch = FetchType.EAGER)
     private List<Role> roleList;
 
     @Id

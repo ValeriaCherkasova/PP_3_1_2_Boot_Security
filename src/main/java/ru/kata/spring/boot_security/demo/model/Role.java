@@ -2,23 +2,18 @@ package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Id;
-
+import javax.persistence.*;
 
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
-
-
-   // @ManyToOne
-  //  @JoinColumn(name = "id")
-  //  private User user;
+//    @ManyToOne(optional=false)
+//    @JoinColumn(name = "id")
+//    private User user;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String name;
 
     public Role(String name, long id) {

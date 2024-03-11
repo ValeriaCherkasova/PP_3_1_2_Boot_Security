@@ -64,4 +64,8 @@ public class UserService implements UserDetailsService {
     public List<User> getAllUsers() {
         return (List<User>) em.createQuery("SELECT u FROM User u").getResultList();
     }
+
+    public User findByUsername(String name) {
+        return userRepository.findByUsername(name);
+    }
 }

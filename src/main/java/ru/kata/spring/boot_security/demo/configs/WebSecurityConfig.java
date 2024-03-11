@@ -8,15 +8,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import javax.persistence.EntityManager;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
     private final UserService userService;
+    private final EntityManager entityManager;
 
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserService userService) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserService userService, EntityManager entityManager) {
         this.successUserHandler = successUserHandler;
         this.userService = userService;
+        this.entityManager = entityManager;
     }
 
     @Override

@@ -14,9 +14,9 @@ import javax.persistence.Id;
 public class Role implements GrantedAuthority {
 
 
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private User user;
+   // @ManyToOne
+  //  @JoinColumn(name = "id")
+  //  private User user;
     @Id
     private Long id;
     private String name;
@@ -42,13 +42,13 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
     public Long getId() {
         return id;

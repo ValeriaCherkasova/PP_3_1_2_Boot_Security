@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h2>Users</h2>
+
+    <form method="get" action="/user/read_user">
+        <label for="userId">Enter User ID:</label>
+        <input type="text" id="userId" name="id" />
+        <input type="submit" value="Search" />
+    </form>
+
+    <h3>Delete User</h3>
+    <form method="post" action="/user/delete_user">
+        <label for="deleteUserId">Enter User ID to delete:</label>
+        <input type="text" id="deleteUserId" name="id" />
+        <input type="submit" value="Delete" />
+    </form>
+
+    <h3>New User</h3>
+    <form method="post" action="/user/create_user">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" name="firstName" /></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td><input type="text" name="lastName" /></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" name="email" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Save" /></td>
+            </tr>
+        </table>
+    </form>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>LastName</th>
+            <th>Email</th>
+        </tr>
+        <th:block th:each="user : ${users}">
+            <tr>
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.email}"></td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+</body>
+</html>

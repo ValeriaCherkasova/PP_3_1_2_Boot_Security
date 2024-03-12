@@ -13,7 +13,6 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,10 +40,6 @@ public class UserService implements UserDetailsService {
         }
 
         return user;
-    }
-
-    public List<User> allUsers() {
-        return userRepository.findAll();
     }
 
     // TODO: не работает запись юзера в бд.

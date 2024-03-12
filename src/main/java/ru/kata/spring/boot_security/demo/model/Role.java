@@ -7,9 +7,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
-//    @ManyToOne(optional=false)
-//    @JoinColumn(name = "id")
-//    private User user;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,6 +16,10 @@ public class Role implements GrantedAuthority {
     public Role(String name, long id) {
         this.name = name;
         this.id = id;
+    }
+
+    public Role(String name) {
+        this.name = name;
     }
 
     public Role(long id) {

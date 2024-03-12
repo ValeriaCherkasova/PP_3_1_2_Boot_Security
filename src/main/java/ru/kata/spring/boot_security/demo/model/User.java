@@ -26,15 +26,15 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column(name = "user_name")
-    private String userName;
+    private String username;
     @Column(name = "password")
     private String password;
 
 
-    public User(String firstName, String lastName, String userName, String password) {
+    public User(String firstName, String lastName, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
     }
 
@@ -91,7 +91,11 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
+    }
+
+    public void setUsername (String username){
+        this.username = username;
     }
 
     @Override
@@ -122,12 +126,12 @@ public class User implements UserDetails {
         return id == user.id && Objects.equals(roleList, user.roleList)
                 && Objects.equals(firstName, user.firstName)
                 && Objects.equals(lastName, user.lastName)
-                && Objects.equals(userName, user.userName)
+                && Objects.equals(username, user.username)
                 && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(roleList, id, firstName, lastName, userName, password);
+        return Objects.hash(roleList, id, firstName, lastName, username, password);
     }
 }

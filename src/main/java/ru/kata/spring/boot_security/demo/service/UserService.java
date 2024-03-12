@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
@@ -14,6 +13,8 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -46,28 +47,24 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public boolean saveUser(User user) {
-        User userFromDB = userRepository.findByUsername(user.getUsername());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        if (userFromDB != null) {
-            return false;
+    // TODO: не работает запись юзера в бд.
+    public void saveUser(User user) {
+        if (userRepository.findByUsername(user.getUsername()) != null) {
+            return;
         }
 
-        user.setRoleList((List<Role>) new Role("ROLE_USER", 1L));
-        userRepository.save(user);
-        return true;
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        Role role = new Role("ROLE_USER", 1L);
+        user.setRoleList(Collections.singletonList(role));
+
+        userRepository.saveAndFlush(user);
     }
 
-    public boolean deleteUser(Long userId) {
+    public void deleteUser(Long userId) {
         if (userRepository.findById(userId).isPresent()) {
             userRepository.deleteById(userId);
-            return true;
         }
-        return false;
-    }
-
-    public void createUser(User user) {
-        userRepository.createUser(user);
     }
 
     public List<User> getAllUsers() {

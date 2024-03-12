@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -16,7 +17,7 @@ public class AdminController {
     public String getAllUsers(ModelMap model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
-        return "users";
+        return "admin";
     }
 
     @PostMapping(value = "/delete_user")
@@ -24,4 +25,10 @@ public class AdminController {
         userService.deleteUser(id);
         return "redirect:/user/get_all_users";
     }
+    @PostMapping(value = "/create_user")
+    public String createUser(@ModelAttribute("user") User user) {
+        userService.createUser(user);
+        return "redirect:/user/get_all_users";
+    }
+
 }

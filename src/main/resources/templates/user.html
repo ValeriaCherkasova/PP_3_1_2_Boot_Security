@@ -1,11 +1,64 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
+<div>
+    <h2>Admins</h2>
 
+    <h3>Delete User</h3>
+    <form method="post" action="/user/delete_user">
+        <label for="deleteUserId">Enter User ID to delete:</label>
+        <input type="text" id="deleteUserId" name="id" />
+        <input type="submit" value="Delete" />
+    </form>
 
+    <h3>New User</h3>
+    <form method="post" action="/admin/save_user">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" name="firstName" /></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td><input type="text" name="lastName" /></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="text" name="password" /></td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Save" /></td>
+            </tr>
+        </table>
+    </form>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>LastName</th>
+            <th>Password</th>
+            <th>UserName</th>
+
+        </tr>
+        <th:block th:each="user : ${users}">
+            <tr>
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.password}"></td>
+                <td th:text="${user.username}"></td>
+            </tr>
+        </th:block>
+    </table>
+</div>
 </body>
 </html>

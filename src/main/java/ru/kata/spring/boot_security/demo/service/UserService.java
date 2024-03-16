@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
@@ -14,7 +15,6 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -32,11 +32,10 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-
-        String pass = passwordEncoder.encode(user.getPassword());
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -45,6 +44,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    @Transactional
     public void saveUser(User user) {
         if (userRepository.findByUsername(user.getUsername()) != null) {
             return;
@@ -52,11 +52,8 @@ public class UserService implements UserDetailsService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-//        userRepository.save(user);
-
         Role role = roleRepository.findFirstByName("ROLE_USER");
         if (role == null) {
-            // Создать новую роль, если она не найдена
             role = new Role("ROLE_USER");
             roleRepository.save(role);
         }
@@ -66,16 +63,19 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    @Transactional
     public void deleteUser(Long userId) {
         if (userRepository.findById(userId).isPresent()) {
             userRepository.deleteById(userId);
         }
     }
 
+    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
-        return (List<User>) em.createQuery("SELECT u FROM User u").getResultList();
+        return userRepository.getAllUsers();
     }
 
+    @Transactional(readOnly = true)
     public User findByUsername(String name) {
         return userRepository.findByUsername(name);
     }

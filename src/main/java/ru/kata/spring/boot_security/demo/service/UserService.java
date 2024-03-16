@@ -14,6 +14,7 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -35,6 +36,8 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
 
+        String pass = passwordEncoder.encode(user.getPassword());
+
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
@@ -42,7 +45,6 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    // TODO: не работает запись юзера в бд.
     public void saveUser(User user) {
         if (userRepository.findByUsername(user.getUsername()) != null) {
             return;
@@ -50,10 +52,18 @@ public class UserService implements UserDetailsService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Role role = new Role("ROLE_USER", 1L);
+//        userRepository.save(user);
+
+        Role role = roleRepository.findFirstByName("ROLE_USER");
+        if (role == null) {
+            // Создать новую роль, если она не найдена
+            role = new Role("ROLE_USER");
+            roleRepository.save(role);
+        }
+
         user.setRoleList(Collections.singletonList(role));
 
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
     }
 
     public void deleteUser(Long userId) {

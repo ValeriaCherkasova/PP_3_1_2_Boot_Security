@@ -6,17 +6,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
 import java.security.Principal;
 
 @Controller
 @RequestMapping("/")
 public class UserController {
-    private final UserService userService;
+    private final UserServiceImp userService;
 
     @Autowired
-    public UserController(UserService userServiceImpl) {
+    public UserController(UserServiceImp userServiceImpl) {
         this.userService = userServiceImpl;
     }
 

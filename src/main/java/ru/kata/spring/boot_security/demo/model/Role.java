@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,14 +11,15 @@ import javax.persistence.Column;
 import javax.persistence.ManyToMany;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "roles", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "roleList")
@@ -69,6 +69,7 @@ public class Role implements GrantedAuthority {
     public void setName(String name) {
         this.name = name;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

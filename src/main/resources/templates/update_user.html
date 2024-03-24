@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New user:</title>
+</head>
+<body>
+<div>
+    <br>
+    <form method="post" action="/admin/update_user">
+        <table>
+            <tr>
+                <td><input type="hidden" name="id" th:value="${user.id}" /></td>
+            </tr>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" name="firstName" th:value="${user.firstName}" /></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td><input type="text" name="lastName" th:value="${user.lastName}" /></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="text" name="password" th:value="${user.password}" /></td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username" th:value="${user.username}" /></td>
+            </tr>
+            <tr>
+                <td>Roles:</td>
+                <td>
+                    <select size="3" multiple="multiple" name="roles" id="roles">
+                        <option disabled>Roles:</option>
+                        <th:block th:each="role : ${roles}">
+                            <option th:value="${role.name}" th:text="${role.name}"></option>
+                        </th:block>
+                        <option value="all">All Roles</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Save" /></td>
+            </tr>
+        </table>
+    </form>
+    <br/>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+        <th:block th:each="role : ${roles}">
+            <tr>
+                <td th:text="${role.id}"></td>
+                <td th:text="${role.name}"></td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+</body>
+</html>

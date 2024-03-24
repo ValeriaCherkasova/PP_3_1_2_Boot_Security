@@ -5,69 +5,57 @@
     <title>Title</title>
 </head>
 <body>
-    <div>
-        <h2>Users</h2>
+<div>
+    <h2>Users</h2>
 
-        <form method="get" action="/admin/read_user">
-            <label for="userId">Enter User ID:</label>
-            <input type="text" id="userId" name="id" />
-            <input type="submit" value="Search" />
-        </form>
+    <h3>Update User</h3>
+    <form method="get" action="/admin/get_user">
+        <label for="userId">Enter User ID:</label>
+        <input type="text" id="userId" name="id"/>
+        <input type="submit" value="Search"/>
+    </form>
 
-        <h3>Delete User</h3>
-        <form method="post" action="/admin/delete_user">
-            <label for="deleteUserId">Enter User ID to delete:</label>
-            <input type="text" id="deleteUserId" name="id" />
-            <input type="submit" value="Delete" />
-        </form>
+    <h3>Delete User</h3>
+    <form method="post" action="/admin/delete_user">
+        <label for="deleteUserId">Enter User ID to delete:</label>
+        <input type="text" id="deleteUserId" name="id"/>
+        <input type="submit" value="Delete"/>
+    </form>
 
-        <h3>New User</h3>
-        <form method="post" action="/admin/save_user">
-            <table>
-                <tr>
-                    <td>Name:</td>
-                    <td><input type="text" name="firstName" /></td>
-                </tr>
-                <tr>
-                    <td>Last Name:</td>
-                    <td><input type="text" name="lastName" /></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><input type="text" name="password" /></td>
-                </tr>
-                <tr>
-                    <td>Username:</td>
-                    <td><input type="text" name="username" /></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><input type="submit" value="Save" /></td>
-                </tr>
-            </table>
-        </form>
+    <h3>New User</h3>
+    <form method="get" action="/admin/get_roles">
+        <input type="submit" value="New User"/>
+    </form>
 
-        <table border="1">
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>LastName</th>
+            <th>UserName</th>
+            <th>Roles</th>
+        </tr>
+        <th:block th:each="user : ${users}">
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>LastName</th>
-                <th>UserName</th>
-
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.username}"></td>
+                <td>
+                    <span th:each="role, iterStat : ${user.roleList}">
+                        <span th:text="${role.name}"></span>
+                        <span th:unless="${iterStat.last}">,</span>
+                    </span>
+                    <span th:if="${#lists.isEmpty(user.roleList)}">No roles assigned</span>
+                </td>
             </tr>
-            <th:block th:each="user : ${users}">
-                <tr>
-                    <td th:text="${user.id}"></td>
-                    <td th:text="${user.firstName}"></td>
-                    <td th:text="${user.lastName}"></td>
-                    <td th:text="${user.username}"></td>
-                </tr>
-            </th:block>
-        </table>
-        <b>
-            <input type="button" value="Logout"
-                   onclick="window.location.href = '/logout'"
-            />
-        </b>
-    </div>
+        </th:block>
+    </table>
+    <b>
+        <input type="button" value="Logout"
+               onclick="window.location.href = '/logout'"
+        />
+    </b>
+</div>
 </body>
 </html>
